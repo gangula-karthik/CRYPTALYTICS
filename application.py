@@ -22,11 +22,6 @@ def index() -> str:
 
 
 def generate_data() -> Iterator[str]:
-    """
-    Generates random value between 0 and 100
-
-    :return: String containing current timestamp (YYYY-mm-dd HH:MM:SS) and randomly generated data.
-    """
     if request.headers.getlist("X-Forwarded-For"):
         client_ip = request.headers.getlist("X-Forwarded-For")[0]
     else:
@@ -46,9 +41,10 @@ def generate_data() -> Iterator[str]:
 
 @application.route("/chart-data")
 def chart_data() -> Response:
-    url = "wss://stream.binance.com:9443/ws"
-    binance_ws = BinanceWebSocket(url)
+    json_data = json.dumps(data)
+    # response = Response(stream_with_context(generate_data()), mimetype="text/event-stream")
     response = Response(stream_with_context(generate_data()), mimetype="text/event-stream")
+    print(response)
     response.headers["Cache-Control"] = "no-cache"
     response.headers["X-Accel-Buffering"] = "no"
     return response

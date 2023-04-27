@@ -9,7 +9,6 @@ class BinanceWebSocket:
         self.ws = None
 
     def on_open(self, ws):
-        print("Opened connection")
         subscribe = {"method": "SUBSCRIBE", "params": ["btcusdt@kline_1s"], "id": 1}
         ws.send(json.dumps(subscribe))
 
@@ -23,9 +22,6 @@ class BinanceWebSocket:
             )
         print(json_data)
 
-    def on_error(self, ws, error):
-        print(f"Error: {error}")
-
     def on_close(self, ws):
         print("Connection closed")
 
@@ -35,8 +31,7 @@ class BinanceWebSocket:
                 self.url,
                 on_open=self.on_open,
                 on_message=self.on_message,
-                on_error=self.on_error,
-                on_close=self.on_close,
+                on_close=self.on_close
             )
             self.ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
         except Exception as e:
@@ -48,4 +43,4 @@ class BinanceWebSocket:
 if __name__ == "__main__":
     url = "wss://stream.binance.com:9443/ws"
     binance_ws = BinanceWebSocket(url)
-    binance_ws.start()
+    print(binance_ws.start())
