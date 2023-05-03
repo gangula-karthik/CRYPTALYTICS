@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/card.css') }}">
     <title>Card</title>
 </head>
 <body>
@@ -88,13 +87,26 @@ body {
     color: #ddd;
 }
 
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    justify-items: center;
+}
+
     </style>
-    <div class="card">
-        <img src="{{ image_url }}" alt="Card image" class="card-img">
-        <div class="card-content">
-            <h2 class="card-title">{{ headline }}</h2>
-            <p class="card-description">{{ description }}</p>
+    <div class="news-container">
+        {% for article in news %}
+        <div class="card">
+            {% if article.urlToImage %} <!-- Check if the image URL exists -->
+            <img class="card-img" src="{{ article.urlToImage }}" alt="{{ article.title }}">
+            {% endif %}
+            <div class="card-content">
+                <h2 class="card-title">{{ article.title }}</h2>
+                <p class="card-description">{{ article.description }}</p>
+            </div>
         </div>
+        {% endfor %}
     </div>
 </body>
 </html>
