@@ -109,6 +109,11 @@
         .price-change.negative {
             color: #ed4245;
         }
+
+        #search-crypto{
+            margin-bottom: 30px;
+            margin-top: 60px;
+        }
     </style>
 </head>
 <body>
@@ -137,9 +142,16 @@
         </div>
     
 
+        <div class="row">
+            <div class="col-md-12">
+                <form action="/pricechange" method="GET">
+                    <input type="text" id="search-crypto" class="form-control" placeholder="Enter search term">
+            </form>
+            </div>
+        </div>
 
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="crypto-table">
                 <thead>
                     <tr>
                         <th>Symbol</th>
@@ -167,5 +179,27 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('search-crypto').addEventListener('keyup', function () {
+            // Get the user's input
+            let searchValue = this.value.toLowerCase();
+        
+            // Get the table rows
+            let tableRows = document.getElementById('crypto-table').getElementsByTagName('tr');
+        
+            // Loop through the rows and hide the ones that don't match the search value
+            for (let i = 1; i < tableRows.length; i++) {
+                let row = tableRows[i];
+                let symbol = row.getElementsByTagName('td')[0].textContent.toLowerCase();
+        
+                if (symbol.indexOf(searchValue) > -1) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+        </script>
+        
 </body>
 </html>
