@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 
 def get_news(search_query=None):
-    url = "https://newsapi.org/v2/everything?q=btc-usd&language=en&sortBy=publishedAt&apiKey=1b79f31f4909475bbfeadd33d9e08df3"
+    url = f"https://newsapi.org/v2/everything?q={search_query}&language=en&sortBy=publishedAt&apiKey=1b79f31f4909475bbfeadd33d9e08df3"
     response = requests.get(url)
     data = response.json()["articles"]
     x = 0
@@ -16,9 +16,6 @@ def get_news(search_query=None):
             if search_query.lower() in data[i]["title"].lower():
                 news.append(data[i])
                 x += 1
-        elif "bitcoin" in data[i]["title"].lower():
-            news.append(data[i])
-            x += 1
     return news
 
 @app.route('/', methods=['GET'])
