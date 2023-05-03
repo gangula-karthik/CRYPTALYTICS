@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Price Changes</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #f8f9fa;
+        }
+        .card {
+    background-color: #2c2c2c;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 320px;
+    width: 100%;
+    transition: all 0.3s ease, border 0.3s ease;
+    position: relative;
+    border: 5px solid transparent; /* Add transparent border */
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    backdrop-filter: blur(0px);
+    border-radius: 8px;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
+    border: 5px solid #8a0dff;
+}
+
+.card:hover::after {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">24-Hour Crypto Price Changes</h1>
+        <div class="row">
+            {% for item in data %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.symbol }}</h5>
+                            <p class="card-text">
+                                Price Change: {{ item.priceChange }}<br>
+                                Price Change Percent: {{ item.priceChangePercent }}%<br>
+                                High Price: {{ item.highPrice }}<br>
+                                Low Price: {{ item.lowPrice }}<br>
+                                Volume: {{ item.volume }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

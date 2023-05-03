@@ -1,75 +1,41 @@
-from fastapi import FastAPI
-import yfinance as yf
-import pandas as pd
-import matplotlib.pyplot as plt
-from yahooquery import Screener
+from flask import Flask, render_template, request
 import requests
-import keyring
 import json
 
-app = FastAPI()
+
+app = Flask(__name__)
+
+def get_news(search_query=None):
+    url = f"https://newsapi.org/v2/everything?q={search_query}&language=en&sortBy=publishedAt&apiKey=1b79f31f4909475bbfeadd33d9e08df3"
+    response = requests.get(url)
+    data = response.json()["articles"]
+    x = 0
+    news = []
+    for i in range(len(data)):
+        if search_query:
+            if search_query.lower() in data[i]["title"].lower():
+                news.append(data[i])
+                x += 1
+    return news
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/crypto/{ticker}")
-async def get_data(ticker):
-    ticker = yf.Ticker(ticker)
-    data = ticker.history(period="max")
-    data = data.to_json()
-    return json.dumps(data, indent=4)
-
-
-@app.get("/list")
-def getTickers():
-    s = Screener()
-    data = s.get_screeners('all_cryptocurrencies_us', count=250)
-    dicts = data['all_cryptocurrencies_us']['quotes']
-    symbols = [d['symbol'] for d in dicts]
-    return  {"response": symbols}
-
-
-@app.get("/realtime")
-async def getRealTimePrice4All():
-    try:
-        r = requests.get("https://www.okx.com/api/v5/market/tickers?instType=SPOT")
-        r.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-    else:
-        data = r.json()
-        return data
-    
-
-@app.get("/realtime/{ticker}")
-async def getRealTimePrice(ticker):
-    try:
-        r = requests.get(f"https://www.okx.com/api/v5/market/ticker?instId={ticker}-SWAP")
-        r.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-    else:
-        data = r.json()
-        return data
-    
-@app.get("/daypricechange")
-async def dayPriceChange(): 
+@app.route('/pricechange', methods=['GET'])
+def dayPriceChange(): 
     '''
-    Returns the 24 hour price change for all the cryptocurrencies
+    Returns the 24-hour price change for all the cryptocurrencies
     '''
     url = "https://api.binance.com/api/v3/ticker/24hr"
     response = requests.get(url).json()
-    return response
+    return render_template('pricechange.html', data=response)
 
-def apiKeyRetrieve(name, username):
-    return keyring.get_password(name, username)
+@app.route('/cryptonews', methods=['GET'])
+def news():
+    search_query = request.args.get('search')
+    news_data = get_news(search_query)
+    return render_template('news.html', news=news_data) 
 
-@app.get("/news")
-async def latestNews():
-    API_KEY = apiKeyRetrieve("cryptoNewsApi", "karthik")
-    url = f"https://newsapi.org/v2/everything?q=bitcoin&apiKey={str(API_KEY)}"
-    response = requests.get(url).json()
-    return response
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+# lsof -nti:5000 | xargs kill -9
