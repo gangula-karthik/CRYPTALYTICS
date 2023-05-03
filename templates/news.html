@@ -60,7 +60,7 @@ body {
 
 .card:hover::after {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(2px);
 }
 
 .card-img {
@@ -102,9 +102,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     width: 100%;
-    max-width: 1200px; /* Adjust this value based on your desired width */
+    max-width: 1500px;
 }
 
 .search-form {
@@ -168,7 +169,6 @@ body {
 
     </style>
     <div class="search-container">
-        <!-- Add the search-form class to the form element -->
         <form class="search-form" action="/" method="GET">
             <input class="search-input" type="text" name="search" placeholder="Search news..." required>
             <button class="search-button" type="submit">Search</button>
@@ -180,7 +180,7 @@ body {
     <div class="news-container">
         {% for article in news %}
         <div class="card">
-            {% if article.urlToImage %} <!-- Check if the image URL exists -->
+            {% if article.urlToImage %}
             <img class="card-img" src="{{ article.urlToImage }}" alt="{{ article.title }}">
             {% endif %}
             <div class="card-content">
