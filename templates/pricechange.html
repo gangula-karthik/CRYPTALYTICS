@@ -181,13 +181,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.getElementById('search-crypto').addEventListener('keyup', function () {
-            // Get the user's input
             let searchValue = this.value.toLowerCase();
-        
-            // Get the table rows
+    
             let tableRows = document.getElementById('crypto-table').getElementsByTagName('tr');
-        
-            // Loop through the rows and hide the ones that don't match the search value
+    
             for (let i = 1; i < tableRows.length; i++) {
                 let row = tableRows[i];
                 let symbol = row.getElementsByTagName('td')[0].textContent.toLowerCase();
