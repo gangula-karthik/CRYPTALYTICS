@@ -8,7 +8,7 @@ data = response.json()["articles"]
 x = 0
 for i in range(len(data)):
     if "bitcoin" in data[i]["title"].lower():
-        print(str(x), str(data[i]["title"]))
+        print(str(x), str(data[i]))
         x += 1
     else: 
         pass
