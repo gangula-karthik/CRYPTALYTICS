@@ -15,13 +15,15 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #1f1f1f;
+    /* Add flex-direction and flex-wrap properties */
     display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    background-color: #1f1f1f;
 }
 
 .card {
@@ -94,7 +96,87 @@ body {
     justify-items: center;
 }
 
+
+/* Add a fixed width for the search-container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1200px; /* Adjust this value based on your desired width */
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    border: 2px solid #8a0dff;
+    border-radius: 25px;
+    background-color: #2c2c2c;
+    font-size: 16px;
+    color: white;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input:focus {
+    background-color: #3c3c3c;
+}
+
+.search-button {
+    background-color: #8a0dff;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-button:hover {
+    background-color: #a642ff;
+}
+
+.clear-button {
+    background-color: #555;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.clear-button:hover {
+    background-color: #777;
+}
+
     </style>
+    <div class="search-container">
+        <!-- Add the search-form class to the form element -->
+        <form class="search-form" action="/" method="GET">
+            <input class="search-input" type="text" name="search" placeholder="Search news..." required>
+            <button class="search-button" type="submit">Search</button>
+            <button class="clear-button" type="button" onclick="window.location.href='/'">Clear</button>
+        </form>
+    </div>
+
+
     <div class="news-container">
         {% for article in news %}
         <div class="card">
