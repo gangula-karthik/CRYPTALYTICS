@@ -19,14 +19,28 @@ def get_news(search_query=None):
     return news
 
 
+
+
 @app.route('/pricechange', methods=['GET'])
 def dayPriceChange(): 
-    '''
-    Returns the 24-hour price change for all the cryptocurrencies
-    '''
     url = "https://api.binance.com/api/v3/ticker/24hr"
     response = requests.get(url).json()
-    return render_template('pricechange.html', data=response)
+    topcrypto = top3crypto()
+    return render_template('pricechange.html', data=response, top=topcrypto)
+
+
+
+
+def top3crypto():
+    url = 'https://api1.binance.com/api/v3/ticker/24hr'
+    response = requests.get(url)
+    data = response.json()
+    data_sorted = sorted(data, key=lambda x: x['priceChangePercent'], reverse=True)
+    top_3 = data_sorted[0:3]
+    return top_3
+
+
+
 
 @app.route('/cryptonews', methods=['GET'])
 def news():
