@@ -8,6 +8,9 @@ app = Flask(__name__)
 
 
 
+
+
+
 def get_price():
     url = "https://api.binance.com/api/v3/ticker/24hr"
     response = requests.get(url).json()
