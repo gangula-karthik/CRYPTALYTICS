@@ -15,8 +15,8 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/crypto/{ticker}")
-async def get_data(ticker):
+# @app.get("/crypto/{ticker}")
+def get_data(ticker):
     ticker = yf.Ticker(ticker)
     data = ticker.history(period="max")
     data = data.to_json()

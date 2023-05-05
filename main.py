@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, Response
 import requests
 import json
+import yfinance as yf
 
 
 app = Flask(__name__)
@@ -27,7 +28,6 @@ def top3crypto():
     return top_3
 
 
-
 def get_news(search_query):
     url = f"https://newsapi.org/v2/everything?q={search_query}&language=en&sortBy=publishedAt&apiKey=1b79f31f4909475bbfeadd33d9e08df3"
     response = requests.get(url)
@@ -46,6 +46,21 @@ def news():
     search_query = request.args.get('search')
     news_data = get_news(search_query)
     return render_template('news.html', news=news_data) 
+
+def get_data(ticker):
+    ticker = yf.Ticker(ticker)
+    data = ticker.history(period="max")
+    return data
+
+@app.route('/crypto/<ticker>')
+def crypto_data(ticker):
+    return render_template('crypto_chart.html', ticker=ticker)
+
+@app.route('/crypto-data/<ticker>')
+def crypto_data_json(ticker):
+    data = get_data(ticker)
+    data_json = data.reset_index().to_json(orient='records', date_format='iso')
+    return Response(data_json, content_type='application/json')
 
 if __name__ == '__main__':
     app.run(debug=True)
