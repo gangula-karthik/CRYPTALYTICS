@@ -50,6 +50,7 @@
             transition: all 0.3s ease, border 0.3s ease;
             position: relative;
             border: 5px solid transparent;
+            text-decoration: none !important;
         }
 
         .card::after {
@@ -64,17 +65,20 @@
             border-radius: 8px;
             z-index: 1;
             transition: all 0.3s ease;
+            text-decoration: none !important;
         }
 
         .card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             transform: translateY(-5px);
             border: 5px solid #8a0dff;
+            text-decoration: none !important;
         }
 
         .card:hover::after {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(2px);
+            text-decoration: none !important;
         }
 
         .card-img {
