@@ -62,7 +62,6 @@ webencodings==0.5.1
 yahooquery==2.3.1
 yfinance==0.2.18
 absl-py==1.2.0
-altair @ file:///home/conda/feedstock_root/build_artifacts/altair_1640799865332/work
 anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1660053721269/work/dist
 appnope @ file:///home/conda/feedstock_root/build_artifacts/appnope_1649077682618/work
 argon2-cffi @ file:///home/conda/feedstock_root/build_artifacts/argon2-cffi_1640817743617/work
