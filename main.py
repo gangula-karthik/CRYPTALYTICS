@@ -4,6 +4,7 @@ import json
 import yfinance as yf
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
+from functools import lru_cache
 
 nltk.download('vader_lexicon')
 
@@ -14,10 +15,16 @@ sia = SentimentIntensityAnalyzer()
 
 
 
+@lru_cache(maxsize=1)
 def get_price():
     url = "https://api.binance.com/api/v3/ticker/24hr"
     response = requests.get(url).json()
-    return response
+
+    # Filter out unwanted data
+    keys_to_keep = ['symbol', 'priceChangePercent']
+    filtered_data = [{k: d[k] for k in keys_to_keep} for d in response]
+
+    return filtered_data
 
 def top3crypto(data):
     data_sorted = sorted(data, key=lambda x: float(x['priceChangePercent']), reverse=True)
