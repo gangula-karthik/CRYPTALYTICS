@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify, Response
 import requests
 import json
 import yfinance as yf
-from flask import Flask, render_template, request
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
 
