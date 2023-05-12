@@ -16,14 +16,14 @@ sia = SentimentIntensityAnalyzer()
 
 def get_price():
     url = "https://api.binance.com/api/v3/ticker/24hr"
-    response = requests.get(url).json()[:100]
+    response = requests.get(url).json()
     return response
 
 @app.route('/pricechange', methods=['GET'])
 def dayPriceChange(): 
     response = get_price()
-    topcrypto = top3crypto()
-    return render_template('pricechange.html', data=response, top=topcrypto)
+    # topcrypto = top3crypto()
+    return render_template('pricechange.html', data=response)
 
 def top3crypto():
     url = 'https://api1.binance.com/api/v3/ticker/24hr'
