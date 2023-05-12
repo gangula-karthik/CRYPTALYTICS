@@ -16,7 +16,7 @@ sia = SentimentIntensityAnalyzer()
 
 def get_price():
     url = "https://api.binance.com/api/v3/ticker/24hr"
-    response = requests.get(url).json()
+    response = requests.get(url).json()[:100]
     return response
 
 @app.route('/pricechange', methods=['GET'])
@@ -61,7 +61,7 @@ def AverageSentimentOverall(res):
         neg.append(scores['neg'])
     avg_pos = sum(pos) / len(pos) if pos else 0
     avg_neg = sum(neg) / len(neg) if neg else 0
-    return {"pos": round(avg_pos * 100), "neg": round(avg_neg * 100)}
+    return {"pos": round(avg_pos * 100, 5), "neg": round(avg_neg * 100, 5)}
 
 
 def analyze_sentiment(headline):
