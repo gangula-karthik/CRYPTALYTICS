@@ -18,9 +18,11 @@ sia = SentimentIntensityAnalyzer()
 def get_price():
     url = "https://api.binance.com/api/v3/ticker/24hr"
     response = requests.get(url).json()
+    print(response)
     return response
 
 def top3crypto(data):
+    # data_sorted = sorted(data, key=lambda x: float(x['priceChangePercent']), reverse=True)
     data_sorted = sorted(data, key=lambda x: float(x['priceChangePercent']), reverse=True)
     top_3 = data_sorted[0:3]
     return top_3
