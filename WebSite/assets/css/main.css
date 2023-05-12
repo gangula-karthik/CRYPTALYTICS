@@ -1924,7 +1924,7 @@ button,
   -webkit-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
   -ms-transition: margin-left 0.5s ease, box-shadow 0.5s ease;
   transition: margin-left 0.5s ease, box-shadow 0.5s ease;
-  background-color: #6A8595;
+  background-color: #000000;
   font-size: 0.9em;
   position: relative;
   width: 26em; }
@@ -1935,7 +1935,7 @@ button,
     position: relative;
     width: 26em; }
     #sidebar > .inner > * {
-      border-bottom: solid 2px rgba(210, 215, 217, 0.75);
+      border-bottom: solid 2px rgba(89, 0, 255, 0.75);
       margin: 0 0 3.5em 0;
       padding: 0 0 3.5em 0; }
       #sidebar > .inner > * > :last-child {
@@ -2071,7 +2071,7 @@ button,
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  border-bottom: solid 5px #8a2dff ;
+  border-bottom: solid 5px #8a0dff ;
   padding: 6em 0 1em 0;
   position: relative; }
   #header > * {
@@ -2183,7 +2183,7 @@ button,
 
 /* Footer */
 #footer .copyright {
-  color: #273F4B;
+  color: #acacac;
   font-size: 0.9em; }
   #footer .copyright a {
     color: inherit; }
@@ -2254,7 +2254,7 @@ button,
   margin: 0.5em 0 0 0;
   padding: 0.5em 0 0 0; }
   #menu > ul > li > ul {
-    color: #273F4B;
+    color: #000000;
     display: none;
     margin: 0.5em 0 1.5em 0;
     padding-left: 1em; }
