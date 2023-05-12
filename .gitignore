@@ -5,3 +5,5 @@ resources/
 __pycache__/
 cryptoGPT.ipynb
 CryptoAnalysis.ipynb
+.DS_Store
+```
