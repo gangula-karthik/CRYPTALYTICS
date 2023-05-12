@@ -1,5 +1,5 @@
 name: CRYPTALYTICS
-env: python=3.10
+env: python=3.10.9
 commands:
   - pip install --upgrade pip
   - pip install -r requirements.txt
