@@ -70,6 +70,7 @@ def analyze_sentiment(headline):
 
 @app.route('/cryptonews', methods=['GET'])
 def news():
+    print("hello world")
     search_query = request.args.get('search')
     news_data = get_news(search_query)
     headlines = NewsHeadlines(news_data)
