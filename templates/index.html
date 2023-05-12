@@ -1,65 +1,120 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-<title>Flask-SocketIO Test</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function() {
-// Connect to the Socket.IO server.
-// The connection URL has the following format, relative to the current page:
-//     http[s]://<domain>:<port>[/<namespace>]
-var socket = io();
-// Event handler for new connections.
-// The callback function is invoked when a connection with the
-// server is established.
-socket.on('connect', function() {
-socket.emit('my_event', {data: 'I\'m connected!'});
-});
-// Event handler for server sent data.
-// The callback function is invoked whenever the server emits data
-// to the client. The data is then displayed in the "Received"
-// section of the page.
-socket.on('my_response', function(msg, cb) {
-$('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
-if (cb)
-cb();
-});
-// Test response received from server is handled here
-socket.on('test_response', function(msg) {
-$('#log').append('<br>' + $('<div/>').text(msg.data).html());
-})
-// Broadcast response from server is handled here
-socket.on('broadcast_response', function(msg) {
-$('#log').append('<br>' + $('<div/>').text(msg.data).html());
-})
-// Handlers for the different forms in the page.
-// These accept data from the user and send it to the server in a
-// variety of ways
-$('form#test').submit(function(event) {
-socket.emit('test_message', {data: 'Test message sent'});
-return false;
-});
-$('form#broadcast').submit(function(event) {
-socket.emit('broadcast_message', {data: 'broadcast triggered'});
-return false;
-});
-});
-</script>
-</head>
-<body>
-<h1>Flask-SocketIO Test</h1>
-<p>
-      Async mode is: <b>{{ async_mode }}</b><br>
-</p>
-<h2>Send:</h2>
-<form id="test" method="POST" action="#">
-<input type="submit" value="Test">
-</form>
-<form id="broadcast" method="POST" action="#">
-<input type="submit" value="Broadcast">
-</form>
-<h2>Receive:</h2>
-<div id="log"></div>
-</body>
+	<head>
+		<title>CODEMON</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- static/styles/main.css -->
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Editorial</strong> by CODEMON</a>
+
+									
+								</header>
+
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>Hi, We Are CODEMON!</h1>
+											<p>A free and fully responsive site template</p>
+										</header>
+										<p>Hi we are year 2 students from nanyang polytecnic. We are aiming to achieve financial inlcusion, by addressing awareness, acceptance, availability and affordability. of existing financial product and services. This project focuses on the latest news updates on crypto and nft, latest news update about their price</p>
+										<ul class="actions">
+											<li><a href="#" class="button big">Learn More</a></li>
+										</ul>
+									</div>
+									<span class="image object">
+										<img src="static/images/pic10.jpg" alt="" />
+									</span>
+								</section>
+
+							<!-- Section  -->
+								<section>
+									<header class="major">
+										<h2>Features</h2>
+									</header>
+									<div class="features">
+										<article>
+											<span class="icon fa-gem"></span>
+											<div class="content">
+												<h3>Market News</h3>
+												<p>This provides a one stop news outlet for the users to get their latest and most relevant news on crypto and NFTs. This ensures that users are able to make informed decisios when diving into the world of crypto and nft.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon solid fa-paper-plane"></span>
+											<div class="content">
+												<h3>Real time Analysis</h3>
+												<p>Stay informed fast with the speed of light being your only limit ⚡️</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon solid fa-rocket"></span>
+											<div class="content">
+												<h3>CryptoGPT</h3>
+												<p>Unsure of what to do? Get recommendations from our very own chatbot CryptoGPT! It gives recommendations based on up-to-date market trends and what is popular among traders.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon solid fa-signal"></span>
+											<div class="content">
+												<h3>Forecasting</h3>
+												<p>Using the complex deep learning algorithms we predict the prices for various cryptocurrencies to help you get ahead of your peers. Soon you will be the crypto wizard capable of predicting the future 🧙‍♂️</p>
+											</div>
+										</article>
+									</div>
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- cryptalytics logo -->
+							<img src="static/images/crypto_logo.png" alt="Cryptalytics Logo" width="275" height="100">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Real Time Price Change</a></li>
+										<li><a href="generic.html">Crypto News</a></li>
+										<li><a href="elements.html">CryptoGPT</a></li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Cryptalytics 🚀 All rights reserved: MIT LICENSE</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
 </html>

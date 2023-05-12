@@ -93,6 +93,10 @@ def crypto_data_json(ticker):
     data_json = data.reset_index().to_json(orient='records', date_format='iso')
     return Response(data_json, content_type='application/json')
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
