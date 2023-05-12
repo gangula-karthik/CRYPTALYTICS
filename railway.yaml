@@ -1,0 +1,5 @@
+name: CRYPTALYTICS
+env: python=3.9
+commands:
+  - pip install -r requirements.txt
+  - flask run --host=0.0.0.0 --port=$RAILWAY_PORT
