@@ -1,0 +1,7 @@
+myenv/
+.ipynb_checkpoints/
+.idea/
+resources/
+__pycache__/
+cryptoGPT.ipynb
+CryptoAnalysis.ipynb
