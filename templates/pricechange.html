@@ -118,7 +118,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg sticky-top bg-dark ">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href={{ url_for('index') }}>
             <img src="static/images/crypto_logo.png" alt="Logo" width="250" height="50" class="d-inline-block align-text-top">
           </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,12 +126,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="#">News</a>
-            <a class="nav-item nav-link" href="#">Market</a>
-            <a class="nav-item nav-link" href="#">CryptoGPT</a>
+            <a class="nav-item nav-link" style="color:rgb(210, 210, 210);" href={{ url_for('news') }}>News</a>
+            <a class="nav-item nav-link" style="color:rgb(210, 210, 210);" href={{ url_for('dayPriceChange') }}>Market</a>
+            <a class="nav-item nav-link" style="color:rgb(210, 210, 210);" href="#">CryptoGPT</a>
           </div>
         </div>
-      </nav>    
+      </nav> 
     <div class="container mt-5">
         <h1 class="text-center mb-4">Crypto Price Changes</h1>
 
