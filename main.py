@@ -93,10 +93,17 @@ def crypto_data_json(ticker):
     data_json = data.reset_index().to_json(orient='records', date_format='iso')
     return Response(data_json, content_type='application/json')
 
+
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
+
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
