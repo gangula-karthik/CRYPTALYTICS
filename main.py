@@ -5,6 +5,10 @@ import yfinance as yf
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
 from functools import lru_cache
+from getpass import getpass
+from langchain.llms import AI21
+from langchain import PromptTemplate, LLMChain
+
 
 nltk.download('vader_lexicon')
 
@@ -12,6 +16,7 @@ nltk.download('vader_lexicon')
 
 app = Flask(__name__)
 sia = SentimentIntensityAnalyzer()
+AI21_API_KEY  = getpass()
 
 
 @lru_cache(maxsize=1)
@@ -94,6 +99,25 @@ def crypto_data_json(ticker):
     return Response(data_json, content_type='application/json')
 
 
+def maingpt(msg):
+    template = """Question: {question}
+    
+    Answer: Let's think step by step."""
+    prompt = PromptTemplate(template=template, input_variables=["question"])
+    llm = AI21(ai21_api_key=AI21_API_KEY)
+    llm_chain = LLMChain(prompt=prompt, llm=llm)
+    question = msg
+    ans = llm_chain.run(question)
+    return ans
+
+@app.route('/cryptogpt', methods=['GET', 'POST'])
+def gptcrypto():
+    if request.method == 'POST':
+        text_input = request.form.get('messageInput')
+        answer = maingpt(text_input)
+        return jsonify({'answer': answer})
+    else:
+        return render_template('cryptogpt.html') 
 
 
 @app.errorhandler(404)
