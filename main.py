@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, session
 import requests
 import json
 import yfinance as yf
@@ -8,6 +8,7 @@ from functools import lru_cache
 from getpass import getpass
 from langchain.llms import AI21
 from langchain import PromptTemplate, LLMChain
+from flask_session import Session
 
 
 nltk.download('vader_lexicon')
@@ -16,7 +17,6 @@ nltk.download('vader_lexicon')
 
 app = Flask(__name__)
 sia = SentimentIntensityAnalyzer()
-AI21_API_KEY  = getpass()
 
 
 @lru_cache(maxsize=1)
@@ -98,26 +98,65 @@ def crypto_data_json(ticker):
     data_json = data.reset_index().to_json(orient='records', date_format='iso')
     return Response(data_json, content_type='application/json')
 
+# @app.route('/api_key', methods=['POST'])
+# def api_key():
+#     key = request.json.get('key', None)
+#     if key:
+#         result = maingpt(None, key)  
+#         return jsonify(result), 200
+#     else:
+#         return jsonify({'message': 'No key provided'}), 400
 
-def maingpt(msg):
-    template = """Question: {question}
+
+
+# @app.route('/cryptogpt', methods=['GET', 'POST'])
+# def gptcrypto():
+#     if request.method == 'POST':
+#         text_input = request.form.get('messageInput')
+#         answer = maingpt(text_input)
+#         return jsonify({'answer': answer})
+#     else:
+#         return render_template('cryptogpt.html') 
+
+app.config['SECRET_KEY'] = 'cryptalytics123'
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
+@app.route('/api_key', methods=['POST'])
+def api_key():
+    key = request.form.get('apiKey', None)
+    if key:
+        session['api_key'] = key
+        return jsonify({'message': 'Success'}), 200
+    else:
+        return jsonify({'message': 'No key provided'}), 400
     
+def maingpt(msg, AI21_API_KEY):
+    template = """Question: {question}
+
     Answer: Let's think step by step."""
     prompt = PromptTemplate(template=template, input_variables=["question"])
     llm = AI21(ai21_api_key=AI21_API_KEY)
     llm_chain = LLMChain(prompt=prompt, llm=llm)
     question = msg
     ans = llm_chain.run(question)
-    return ans
+    return ans 
 
 @app.route('/cryptogpt', methods=['GET', 'POST'])
 def gptcrypto():
     if request.method == 'POST':
         text_input = request.form.get('messageInput')
-        answer = maingpt(text_input)
+        api_key = session.get('api_key', None)
+        if not api_key:
+            return jsonify({'message': 'No API key in session'}), 400
+        answer = maingpt(text_input, api_key)
         return jsonify({'answer': answer})
     else:
-        return render_template('cryptogpt.html') 
+        return render_template('cryptogpt.html')
+
+
+
+
 
 
 @app.errorhandler(404)
